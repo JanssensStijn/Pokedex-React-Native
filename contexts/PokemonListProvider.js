@@ -15,7 +15,7 @@ export const PokemonListProvider = ({ children, genUrl }) => {
                     const data = await response.json();
                     const pokemonDataList = await Promise.all(
                         data.pokemon_species.map(async (pokemon) => {
-                            const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon.name}`);
+                            const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon.url.split('/').slice(-2, -1)[0]}`); // get the pokemon id from the specimen url instead of by name => more reliable for data about the pokemon
                             if(response.ok){
                                 return response.json();
                             }

@@ -13,7 +13,7 @@ function Pokemon({pokemon}) {
     <View style={styles.placeContainer}>
       <TouchableOpacity style={[styles.center, styles.touchable]}>
         {pokemon.sprites && <Image source={pokemon.sprites.front_default} style={styles.image}/>}
-        {!pokemon.sprites && <Image source={require("../assets/pokeball.png")} style={styles.image}/>}
+        {!pokemon.sprites && <Image source={require("../assets/pokemon_not_found.png")} style={styles.image}/>}
         <View style={tw`flex-1`}>
           <Text style={styles.name}>{pokemon.name}</Text>
         </View>

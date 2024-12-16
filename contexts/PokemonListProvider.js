@@ -3,16 +3,16 @@ import{ createContext, useState, useEffect, useContext } from 'react';
 
 export const PokemonListContext = createContext();
 
-export const PokemonListProvider = ({ children }) => {
+export const PokemonListProvider = ({ children, genUrl }) => {
     const [pokemons, setPokemons] = useState([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const fetchPokemonGens = async () => {
+        const fetchPokemons = async () => {
             try {
-                const response = await fetch('https://pokeapi.co/api/v2/generation');
+                const response = await fetch(genUrl);
                 const data = await response.json();
-                setPokemonGens(data.results);
+                setPokemons(data.results);
             } catch (error) {
                 console.error('Error fetching pokemons:', error);
             } finally {
@@ -20,7 +20,7 @@ export const PokemonListProvider = ({ children }) => {
             }
         };
 
-        fetchPokemonGens();
+        fetchPokemons();
     }, []);
 
     return (

@@ -21,7 +21,6 @@ function HomeScreenButton({genUrl, text}){
 
 export default function HomeScreen() {
     const pokemonGenerations = usePokemonGenContext();
-    console.log(pokemonGenerations);
 return (
     <View style={[styles.background, styles.center]}>
         {!pokemonGenerations.loading && pokemonGenerations.pokemonGens.map(gen => (

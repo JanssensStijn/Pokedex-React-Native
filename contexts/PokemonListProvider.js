@@ -11,21 +11,21 @@ export const PokemonListProvider = ({ children, genUrl }) => {
         const fetchPokemons = async () => {
             try {
                 const response = await fetch(genUrl);
-                
-                    const data = await response.json();
-                    const pokemonDataList = await Promise.all(
-                        data.pokemon_species.map(async (pokemon) => {
-                            const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon.url.split('/').slice(-2, -1)[0]}`); // get the pokemon id from the specimen url instead of by name => more reliable for data about the pokemon
-                            if(response.ok){
-                                return response.json();
-                            }
-                            else{
-                                console.error('Error fetching pokemons:', pokemon.name);
-                                return {name: pokemon.name};
-                            }
-                        })
-                    );
-                    setPokemons(pokemonDataList);
+                const data = await response.json();
+                const pokemonDataList = await Promise.all(
+                    data.pokemon_species.map(async (pokemon) => {
+                        const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon.url.split('/').slice(-2, -1)[0]}`); // get the pokemon id from the specimen url instead of by name => more reliable for data about the pokemon
+                        if(response.ok){
+                            const pokemonData = await response.json();
+                            return { ...pokemonData, found: true };
+                        }
+                        else{
+                            console.error('Error fetching pokemons:', pokemon.name);
+                            return {name: pokemon.name, found: false};
+                        }
+                    })
+                );
+                setPokemons(pokemonDataList);
                 
             } catch (error) {
                 console.error('Error fetching pokemons:', error);

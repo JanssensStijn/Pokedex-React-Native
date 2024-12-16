@@ -45,10 +45,4 @@ export const PokemonListProvider = ({ children, genUrl }) => {
     );
 };
 
-export const usePokemonListContext = () => {
-    const context = useContext(PokemonListContext);
-    if (!context) {
-        throw new Error('usePokemonListContext must be used within a PokemonListProvider');
-    }
-    return context;
-};
+export const usePokemonListContext = () => useContext(PokemonListContext);

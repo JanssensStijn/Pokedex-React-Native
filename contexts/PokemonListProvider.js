@@ -25,6 +25,7 @@ export const PokemonListProvider = ({ children, genUrl }) => {
                         }
                     })
                 );
+                pokemonDataList.sort((a, b) => a.id - b.id);
                 setPokemons(pokemonDataList);
                 
             } catch (error) {

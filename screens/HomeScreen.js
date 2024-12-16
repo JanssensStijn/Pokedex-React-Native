@@ -4,6 +4,7 @@ import tw from "twrnc";
 import { NAV_POKEMON_LIST } from "../navigation_constants";
 import { usePokemonGenContext } from "../contexts/PokemonGenProvider";
 import { ActivityIndicator } from "react-native";
+import { useEffect } from "react";
 
 function HomeScreenButton({genUrl, genName}){
     const navigation = useNavigation();
@@ -20,22 +21,29 @@ function HomeScreenButton({genUrl, genName}){
 }
 
 export default function HomeScreen() {
-    const pokemonGenerations = usePokemonGenContext();
     const navigation = useNavigation();
-    navigation.setOptions({ title: "POKÉDEX" });
-return (
-    <View style={[styles.background, styles.center]}>
-        {!pokemonGenerations.loading && pokemonGenerations.pokemonGens.map(gen => (
-            <HomeScreenButton key={gen.name} genUrl={gen.url} genName={gen.name} />
-        ))}
-        
-        {pokemonGenerations.loading && <>
-        <ActivityIndicator size="large" color="red" />
-        <Text style={styles.buttonText}>Loading...</Text>
-        </>
-        }
-    </View>
-);
+    const { loading, pokemonGens } = usePokemonGenContext();
+
+    useEffect(() => {
+        navigation.setOptions({ 
+            title: "POKÉDEX"
+        });
+    }, [navigation]);
+
+    return (
+        <View style={[styles.background, styles.center]}>
+            {!loading && pokemonGens.map(gen => (
+                <HomeScreenButton key={gen.name} genUrl={gen.url} genName={gen.name} />
+            ))}
+            
+            {loading && (
+                <>
+                    <ActivityIndicator size="large" color="red" />
+                    <Text style={styles.buttonText}>Loading...</Text>
+                </>
+            )}
+        </View>
+    );
 }
 
 const styles = StyleSheet.create(

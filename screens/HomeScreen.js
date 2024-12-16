@@ -5,14 +5,14 @@ import { NAV_POKEMON_LIST } from "../navigation_constants";
 import { usePokemonGenContext } from "../contexts/PokemonGenProvider";
 import { ActivityIndicator } from "react-native";
 
-function HomeScreenButton({genUrl, text}){
+function HomeScreenButton({genUrl, genName}){
     const navigation = useNavigation();
 
     return(
         <View style={[styles.buttonView, styles.center]}>
-            <TouchableOpacity style={styles.button} onPress={() => navigation.navigate(NAV_POKEMON_LIST, {genUrl})}>
+            <TouchableOpacity style={styles.button} onPress={() => navigation.navigate(NAV_POKEMON_LIST, {genUrl, genName})}>
                 <Text style={styles.buttonText}>
-                    {text.toUpperCase()}
+                    {genName.toUpperCase()}
                 </Text>
             </TouchableOpacity>
         </View>
@@ -21,10 +21,12 @@ function HomeScreenButton({genUrl, text}){
 
 export default function HomeScreen() {
     const pokemonGenerations = usePokemonGenContext();
+    const navigation = useNavigation();
+    navigation.setOptions({ title: "POKÉDEX" });
 return (
     <View style={[styles.background, styles.center]}>
         {!pokemonGenerations.loading && pokemonGenerations.pokemonGens.map(gen => (
-            <HomeScreenButton key={gen.name} genUrl={gen.url} text={gen.name} />
+            <HomeScreenButton key={gen.name} genUrl={gen.url} genName={gen.name} />
         ))}
         
         {pokemonGenerations.loading && <>

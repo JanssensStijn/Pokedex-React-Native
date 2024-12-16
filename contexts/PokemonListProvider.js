@@ -11,8 +11,22 @@ export const PokemonListProvider = ({ children, genUrl }) => {
         const fetchPokemons = async () => {
             try {
                 const response = await fetch(genUrl);
-                const data = await response.json();
-                setPokemons(data.results);
+                
+                    const data = await response.json();
+                    const pokemonDataList = await Promise.all(
+                        data.pokemon_species.map(async (pokemon) => {
+                            const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon.name}`);
+                            if(response.ok){
+                                return response.json();
+                            }
+                            else{
+                                console.error('Error fetching pokemons:', pokemon.name);
+                                return {name: pokemon.name};
+                            }
+                        })
+                    );
+                    setPokemons(pokemonDataList);
+                
             } catch (error) {
                 console.error('Error fetching pokemons:', error);
             } finally {
@@ -21,7 +35,7 @@ export const PokemonListProvider = ({ children, genUrl }) => {
         };
 
         fetchPokemons();
-    }, []);
+    }, [genUrl]);
 
     return (
         <PokemonListContext.Provider value={{ pokemons, loading }}>
@@ -30,4 +44,10 @@ export const PokemonListProvider = ({ children, genUrl }) => {
     );
 };
 
-export const usePokemonListContext = () => useContext(PokemonListContext);
+export const usePokemonListContext = () => {
+    const context = useContext(PokemonListContext);
+    if (!context) {
+        throw new Error('usePokemonListContext must be used within a PokemonListProvider');
+    }
+    return context;
+};

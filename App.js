@@ -13,7 +13,8 @@ const Stack = createNativeStackNavigator();
 const screenOptions = ({
   headerStyle: tw`bg-red-700`,
   headerTitleStyle: tw`text-white text-xl font-bold`,
-
+  headerTitleAlign: 'center',
+  headerTintColor: 'white',
 });
 
 function ProvideApp() {

@@ -1,18 +1,17 @@
-import { FlatList, Image, StyleSheet,Text,TouchableOpacity,View} from "react-native";
+import { ActivityIndicator, FlatList, Image, StyleSheet,Text,TouchableOpacity,View} from "react-native";
 import tw from "twrnc";
-import { useNavigation } from "@react-navigation/native";
 import { PokemonListProvider, usePokemonListContext } from "../contexts/PokemonListProvider";
 import { Icon } from "react-native-elements";
 import { useEffect } from "react";
 
 function Pokemon({pokemon}) {
-  const navigation = useNavigation();
   return (
-    <View style={styles.placeContainer}>
+    <View style={styles.pokemonContainer}>
       <TouchableOpacity style={[styles.center, styles.touchable]}>
-        {pokemon.found && <Image source={pokemon.sprites.front_default} style={styles.image}/>}
+        {pokemon.found && <Image source={{ uri: pokemon.sprites.front_default }} style={styles.image}/>}
         {!pokemon.found && <Image source={require("../assets/pokemon_not_found.png")} style={styles.image}/>}
         <View style={tw`flex-1`}>
+          <Text style={styles.name}># {pokemon.id}</Text>
           <Text style={styles.name}>{pokemon.name}</Text>
         </View>
         <TouchableOpacity>
@@ -29,9 +28,10 @@ function PokemonList() {
 
   if (loading) {
       return (
-          <View style={styles.center}>
-              <Text>Loading...</Text>
-          </View>
+        <>
+          <ActivityIndicator size="large" color="red" />
+          <Text style={styles.waitText}>Loading...</Text>
+        </>
       );
   }
 
@@ -63,7 +63,7 @@ export default function PokemonListScreen({ route, navigation }) {
 const styles = StyleSheet.create({
     center: tw`items-center`,
     container: tw`h-full bg-gray-100`,
-    placeContainer: tw`w-full`,
+    pokemonContainer: tw`w-full`, 
     hairline: {height: StyleSheet.hairlineWidth, backgroundColor: "gray"},
     touchable2: (isSelected) => tw`flex-row p-3 ${isSelected ? "bg-purple-100" : ""}`,
     touchable: tw`flex-row p-3 bg-blue-100`,
@@ -75,6 +75,7 @@ const styles = StyleSheet.create({
     buttonView: tw`w-full mt-4`,
     button: tw`p-3 bg-red-700 rounded-full w-50`,
     buttonText: tw`text-white text-center text-lg`,
+    waitText: tw`text-black text-center text-lg`,
     image: tw`w-30 h-30 mr-4`,
     center: tw`items-center justify-center`,
 });

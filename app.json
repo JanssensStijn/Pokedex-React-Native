@@ -11,7 +11,7 @@
       "image": "./assets/pokedex.png",
       "resizeMode": "contain",
       "backgroundColor": "#000000"
-  },
+    },
     "ios": {
       "supportsTablet": true
     },
@@ -23,6 +23,9 @@
     },
     "web": {
       "favicon": "./assets/pokemon_not_found.png"
-    }
+    },
+    "plugins": [
+      "expo-audio"
+    ]
   }
 }

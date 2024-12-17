@@ -17,6 +17,8 @@ const screenOptions = ({
   headerTintColor: 'white',
 });
 
+
+
 function ProvideApp() {
   return (
       <Stack.Navigator screenOptions={screenOptions}>
@@ -27,6 +29,7 @@ function ProvideApp() {
 }
 
 export default function App() {
+  
   return (
     Platform.select({
       web: (

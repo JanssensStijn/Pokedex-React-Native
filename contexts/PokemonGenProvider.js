@@ -1,5 +1,5 @@
 import{ createContext, useState, useEffect, useContext } from 'react';
-
+import * as SplashScreen from 'expo-splash-screen';
 
 export const PokemonGenContext = createContext();
 
@@ -13,6 +13,8 @@ export const PokemonGenProvider = ({ children }) => {
                 const response = await fetch('https://pokeapi.co/api/v2/generation');
                 const data = await response.json();
                 setPokemonGens(data.results);
+                
+                SplashScreen.hide(); //hide when data available
             } catch (error) {
                 console.error('Error fetching pokemons:', error);
             } finally {

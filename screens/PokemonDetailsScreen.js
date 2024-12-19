@@ -7,7 +7,7 @@ export default function PokemonDetailsScreen({ route, navigation }) {
   const { pokemon } = route.params;
 
   useEffect(() => {
-      navigation.setOptions({ title: pokemon.name.toUpperCase() });
+      navigation.setOptions({ title: '#'+ pokemon.id + ' '+ pokemon.name.toUpperCase() });
   }, [navigation, pokemon]);
 
   return (

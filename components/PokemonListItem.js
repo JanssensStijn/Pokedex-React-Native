@@ -3,6 +3,7 @@ import tw from "twrnc";
 import { Icon } from "react-native-elements";
 import { NAV_POKEMON_DETAILS } from "../navigation_constants";
 import { useNavigation } from "@react-navigation/native";
+import { capitalizeFirstChar } from "../utils/utils";
 
 export default function Pokemon({pokemon}) {
   const navigation = useNavigation();
@@ -13,7 +14,7 @@ export default function Pokemon({pokemon}) {
         {!pokemon.found && <Image source={require("../assets/pokemon_not_found.png")} style={styles.image}/>}
         <View style={tw`flex-1`}>
           <Text style={styles.text}># {pokemon.id}</Text>
-          <Text style={styles.text}>{pokemon.name}</Text>
+          <Text style={styles.text}>{capitalizeFirstChar(pokemon.name)}</Text>
         </View>
           <Icon name={"chevron-forward"} size={24} type="ionicon" style={styles.icon}/>
       </TouchableOpacity>

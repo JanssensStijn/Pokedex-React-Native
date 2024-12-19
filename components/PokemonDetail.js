@@ -1,8 +1,10 @@
-import { Image, StyleSheet, Text, TouchableOpacity, View} from "react-native";
+import { FlatList, Image, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import tw from "twrnc";
 import { Chip, Icon } from "react-native-elements";
 import { Audio } from 'expo-av'; //new version expo-audio not compatible yet with react-native
 import GeneralDetail from "./Details/GeneralDetail";
+import AbilitiesList from "./Details/AbilitiesList";
+import Separator from "./Details/Separator";
 
 
 const playSound = async (soundUri) => {
@@ -54,7 +56,13 @@ const getContrastColor = (bgColor) => {
 };
 
 export default function PokemonDetail({ pokemon }) {
-    
+    const details = [
+        { description: 'Name', value: pokemon.name },
+        { description: 'Pokedex id', value: pokemon.id },
+        { description: 'Base xp', value: pokemon.base_experience },
+        { description: 'Height', value: pokemon.height },
+        { description: 'Weight', value: pokemon.weight },
+    ];
 
     return (
         <View style={[styles.center, styles.pokemonContainer]}>
@@ -75,11 +83,14 @@ export default function PokemonDetail({ pokemon }) {
                 </View>
             </View>
             <View style={[styles.column, styles.detailsContainer]}>
-                <GeneralDetail description="Name" value={pokemon.name}/>
-                <GeneralDetail description="Pokedex id" value={pokemon.id}/>
-                <GeneralDetail description="Base xp" value={pokemon.base_experience}/>
-                <GeneralDetail description="Height" value={pokemon.height}/>
-                <GeneralDetail description="Weight" value={pokemon.weight}/>
+                <FlatList
+                    data={details}
+                    keyExtractor={(item) => item.description}
+                    renderItem={({ item }) => (
+                        <GeneralDetail description={item.description} value={item.value} />
+                    )}
+                    ItemSeparatorComponent={Separator}
+                />
                 <View style={[styles.row]}>
                     <Text style={styles.detailsTitle}>Types: </Text>
                 </View>
@@ -92,6 +103,7 @@ export default function PokemonDetail({ pokemon }) {
                         );
                     })}
                 </View>
+                <AbilitiesList abilities={pokemon.abilities}/>
                 <View style={[styles.row]}>
                     <Text style={styles.detailsTitle}>Abilities: </Text>
                 </View>

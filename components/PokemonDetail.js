@@ -76,10 +76,10 @@ export default function PokemonDetail({ pokemon }) {
             </View>
             <View style={[styles.column, styles.detailsContainer]}>
                 <GeneralDetail description="Name" value={pokemon.name}/>
-                <Text style={styles.detailsTitle}>Pokedex id: {pokemon.id}</Text>
-                <Text style={styles.detailsTitle}>Base xp: {pokemon.base_experience}</Text>
-                <Text style={styles.detailsTitle}>Height: {pokemon.height}</Text>
-                <Text style={styles.detailsTitle}>Weight: {pokemon.weight}</Text>
+                <GeneralDetail description="Pokedex id" value={pokemon.id}/>
+                <GeneralDetail description="Base xp" value={pokemon.base_experience}/>
+                <GeneralDetail description="Height" value={pokemon.height}/>
+                <GeneralDetail description="Weight" value={pokemon.weight}/>
                 <View style={[styles.row]}>
                     <Text style={styles.detailsTitle}>Types: </Text>
                 </View>

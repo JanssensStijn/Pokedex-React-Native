@@ -1,10 +1,12 @@
-import { FlatList, Image, StyleSheet, Text, TouchableOpacity, View} from "react-native";
+import { FlatList, Image, StyleSheet, Text, TouchableOpacity, View, ScrollView} from "react-native";
 import tw from "twrnc";
 import { Chip, Icon } from "react-native-elements";
 import { Audio } from 'expo-av'; //new version expo-audio not compatible yet with react-native
 import GeneralDetail from "./Details/GeneralDetail";
 import AbilitiesList from "./Details/AbilitiesList";
 import Separator from "./Details/Separator";
+import TypesList from "./Details/TypesList";
+import Stats from "./Details/Stats";
 
 
 const playSound = async (soundUri) => {
@@ -23,37 +25,6 @@ const playSound = async (soundUri) => {
     }
 };
 
-const getTypeColor = (type) => {
-    switch (type) {
-        case 'fire': return '#F08030';
-        case 'water': return '#6890F0';
-        case 'grass': return '#78C850';
-        case 'electric': return '#F8D030';
-        case 'ice': return '#98D8D8';
-        case 'fighting': return '#C03028';
-        case 'poison': return '#A040A0';
-        case 'ground': return '#E0C068';
-        case 'flying': return '#A890F0';
-        case 'psychic': return '#F85888';
-        case 'bug': return '#A8B820';
-        case 'rock': return '#B8A038';
-        case 'ghost': return '#705898';
-        case 'dragon': return '#7038F8';
-        case 'dark': return '#705848';
-        case 'steel': return '#B8B8D0';
-        case 'fairy': return '#EE99AC';
-        default: return '#A8A878';
-}};
-
-const getContrastColor = (bgColor) => {
-        const color = bgColor.substring(1); // Remove the '#' character
-        const rgb = parseInt(color, 16); // Convert hex to integer
-        const r = (rgb >> 16) & 0xff; // Extract red
-        const g = (rgb >>  8) & 0xff; // Extract green
-        const b = (rgb >>  0) & 0xff; // Extract blue
-        const luminance = 0.299 * r + 0.587 * g + 0.114 * b; // Calculate luminance
-        return luminance > 160 ? '#000000' : '#FFFFFF'; // Choose black or white based on luminance
-};
 
 export default function PokemonDetail({ pokemon }) {
     const details = [
@@ -65,7 +36,7 @@ export default function PokemonDetail({ pokemon }) {
     ];
 
     return (
-        <View style={[styles.center, styles.pokemonContainer]}>
+        <ScrollView style={styles.pokemonContainer} contentContainerStyle={styles.center}>
             <View style={styles.row}>
                 <View style={styles.imageNameContainer}>
                     {pokemon.found && <Image source={{ uri: pokemon.sprites.front_default }} style={styles.image} resizeMode="contain" />}
@@ -83,37 +54,21 @@ export default function PokemonDetail({ pokemon }) {
                 </View>
             </View>
             <View style={[styles.column, styles.detailsContainer]}>
-                <FlatList
-                    data={details}
-                    keyExtractor={(item) => item.description}
-                    renderItem={({ item }) => (
+                {details.map((item) => (
+                    <>
                         <GeneralDetail description={item.description} value={item.value} />
-                    )}
-                    ItemSeparatorComponent={Separator}
-                />
-                <View style={[styles.row]}>
-                    <Text style={styles.detailsTitle}>Types: </Text>
-                </View>
-                <View style={[styles.row]}>
-                    {pokemon.types.map((type, index) => {
-                        const bgColor = getTypeColor(type.type.name);
-                        const textColor = getContrastColor(bgColor);
-                        return (
-                            <Chip key={index} title={type.type.name} buttonStyle={{ backgroundColor: bgColor, margin:2 }} titleStyle={{ color: textColor }}/>
-                        );
-                    })}
-                </View>
+                        <Separator />
+                    </>
+                ))}
+                <Separator/>
+                <TypesList types={pokemon.types}/>
+                <Separator/>
                 <AbilitiesList abilities={pokemon.abilities}/>
-                <View style={[styles.row]}>
-                    <Text style={styles.detailsTitle}>Abilities: </Text>
-                </View>
-                <View style={[styles.column]}>
-                    {pokemon.abilities.map((ability, index) => (
-                        <Text style={[styles.row]} key={index}>- {ability.ability.name}</Text>
-                    ))}
-                </View>
+                <Separator/>
+                <Stats stats={pokemon.stats}/>
+                
             </View>
-        </View>
+        </ScrollView>
     );
 }
 

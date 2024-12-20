@@ -1,11 +1,10 @@
-import { FlatList, StyleSheet, Text, View} from "react-native";
+import { FlatList, StyleSheet, Text, useWindowDimensions, View} from "react-native";
 import tw from "twrnc";
 import { capitalizeFirstChar } from "../../utils/utils";
 import { RadarChart } from "@salmonco/react-native-radar-chart";
 
-
-
 export default function Stats({stats}) {
+    const windowDim = useWindowDimensions();
 
     const statsData = stats.map((stat) => {
         return {
@@ -19,7 +18,7 @@ export default function Stats({stats}) {
         <Text style={styles.detailsTitle}>Stats:</Text>
         <RadarChart
             data={statsData}
-            size={window.width}
+            size={windowDim.width * 0.8}
             scale={0.95}
             maxValue={150}
             gradientColor={{

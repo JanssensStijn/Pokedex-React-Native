@@ -50,12 +50,3 @@ export default function App() {
     })
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: tw`bg-gray-300`,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});

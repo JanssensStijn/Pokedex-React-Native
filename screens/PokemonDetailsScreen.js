@@ -11,9 +11,9 @@ export default function PokemonDetailsScreen({ route, navigation }) {
   }, [navigation, pokemon]);
 
   return (
-      <View style={styles.container}>
-        <PokemonDetail pokemon={pokemon}/>
-      </View>
+    <View style={styles.container}>
+      <PokemonDetail pokemon={pokemon}/>
+    </View>
   );
 }
 

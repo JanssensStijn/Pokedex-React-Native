@@ -1,5 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 import tw from "twrnc";
 import { NAV_POKEMON_LIST } from "../navigation_constants";
 import { usePokemonGenContext } from "../contexts/PokemonGenProvider";
@@ -11,11 +11,11 @@ function HomeScreenButton({genUrl, genName}){
 
     return(
         <View style={[styles.buttonView, styles.center]}>
-            <TouchableOpacity style={styles.button} onPress={() => navigation.navigate(NAV_POKEMON_LIST, {genUrl, genName})}>
+            <Pressable style={styles.button} onPress={() => navigation.navigate(NAV_POKEMON_LIST, {genUrl, genName})}>
                 <Text style={styles.buttonText}>
                     {genName.toUpperCase()}
                 </Text>
-            </TouchableOpacity>
+            </Pressable>
         </View>
     )
 }

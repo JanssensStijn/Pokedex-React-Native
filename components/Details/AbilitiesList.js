@@ -1,10 +1,10 @@
-import { FlatList, StyleSheet, Text, View} from "react-native";
+import { StyleSheet, Text, View} from "react-native";
 import tw from "twrnc";
 import { capitalizeFirstChar } from "../../utils/utils";
 
 export default function AbilitiesList({abilities}) {
   return (
-    <>
+    <View>
       <Text style={styles.detailsTitle}>Abilities:</Text>
       <View style={styles.container}>
         {abilities.map((ability) => (
@@ -13,7 +13,7 @@ export default function AbilitiesList({abilities}) {
           </View>
         ))}
       </View>
-    </>
+    </View>
   );
 }
 

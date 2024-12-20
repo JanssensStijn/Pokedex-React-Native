@@ -1,12 +1,14 @@
-import { FlatList, Image, StyleSheet, Text, TouchableOpacity, View, ScrollView} from "react-native";
+import { Image, StyleSheet, Text, View, ScrollView, Pressable} from "react-native";
 import tw from "twrnc";
-import { Chip, Icon } from "react-native-elements";
+import { Icon } from "react-native-elements";
 import { Audio } from 'expo-av'; //new version expo-audio not compatible yet with react-native
 import GeneralDetail from "./Details/GeneralDetail";
 import AbilitiesList from "./Details/AbilitiesList";
 import Separator from "./Details/Separator";
 import TypesList from "./Details/TypesList";
 import Stats from "./Details/Stats";
+import GeneralDetailList from "./Details/GeneralDetailList";
+import MovesList from "./Details/MovesList";
 
 
 const playSound = async (soundUri) => {
@@ -25,48 +27,36 @@ const playSound = async (soundUri) => {
     }
 };
 
-
 export default function PokemonDetail({ pokemon }) {
-    const details = [
-        { description: 'Name', value: pokemon.name },
-        { description: 'Pokedex id', value: pokemon.id },
-        { description: 'Base xp', value: pokemon.base_experience },
-        { description: 'Height', value: pokemon.height },
-        { description: 'Weight', value: pokemon.weight },
-    ];
-
+    
     return (
         <ScrollView style={styles.pokemonContainer} contentContainerStyle={styles.center}>
             <View style={styles.row}>
                 <View style={styles.imageNameContainer}>
                     {pokemon.found && <Image source={{ uri: pokemon.sprites.front_default }} style={styles.image} resizeMode="contain" />}
                     {!pokemon.found && <Image source={require("../assets/pokemon_not_found.png")} style={styles.image} resizeMode="contain" />}
-                    </View>
+                </View>
                 <View style={styles.column}>
-                    <TouchableOpacity onPressOut={() => playSound(pokemon.cries.latest)} style={styles.touchable}>
+                    <Pressable onPressOut={() => playSound(pokemon.cries.latest)} style={styles.touchable}>
                         <Icon name={"play-circle-outline"} size={40} type="ionicon" style={styles.icon} />
                         <Text style={styles.touchableText}>Latest Cry</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPressOut={() => playSound(pokemon.cries.legacy)} style={styles.touchable}>
+                    </Pressable>
+                    <Pressable onPressOut={() => playSound(pokemon.cries.legacy)} style={styles.touchable}>
                         <Icon name={"play-circle-outline"} size={40} type="ionicon" style={styles.icon} />
                         <Text style={styles.touchableText}>Legacy Cry</Text>
-                    </TouchableOpacity>
+                    </Pressable>
                 </View>
             </View>
             <View style={[styles.column, styles.detailsContainer]}>
-                {details.map((item) => (
-                    <>
-                        <GeneralDetail description={item.description} value={item.value} />
-                        <Separator />
-                    </>
-                ))}
+                <GeneralDetailList pokemon={pokemon}/>
                 <Separator/>
                 <TypesList types={pokemon.types}/>
                 <Separator/>
                 <AbilitiesList abilities={pokemon.abilities}/>
                 <Separator/>
                 <Stats stats={pokemon.stats}/>
-                
+                <Separator/>
+                <MovesList moves={pokemon.moves}/>
             </View>
         </ScrollView>
     );

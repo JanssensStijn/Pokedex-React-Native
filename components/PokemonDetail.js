@@ -82,6 +82,7 @@ const styles = StyleSheet.create({
     },
     detailsContainer: {
         marginTop: 20,
+        marginBottom: 20,
         paddingHorizontal: 20,
         width: '100%',
     },

@@ -40,7 +40,7 @@ export default function TypesList({types}) {
   return (
     <>
       <Text style={styles.detailsTitle}>Types:</Text>
-      <View style={styles.container}>
+      <View style={types.length === 1 ? styles.centeredContainer : styles.container}>
         {types.map((type) => {
           const bgColor = getTypeColor(type.type.name);
           const textColor = getContrastColor(bgColor);
@@ -60,6 +60,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'space-between',
+    padding: 15,
+  },
+  centeredContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
     padding: 15,
   },
   itemContainer: {

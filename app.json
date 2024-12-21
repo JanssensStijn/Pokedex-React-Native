@@ -2,6 +2,7 @@
   "expo": {
     "name": "Pokedex",
     "slug": "Pokedex",
+    "description": "A Pokedex made with React Native",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/pokemon_not_found.png",
@@ -23,6 +24,9 @@
       "permissions": [
         "android.permission.RECORD_AUDIO",
         "android.permission.MODIFY_AUDIO_SETTINGS",
+        "android.permission.INTERNET",
+        "android.permission.RECORD_AUDIO",
+        "android.permission.MODIFY_AUDIO_SETTINGS",
         "android.permission.INTERNET"
       ],
       "package": "be.snipersoft.pokedex"
@@ -37,6 +41,12 @@
       "eas": {
         "projectId": "13df90a6-c189-4260-aafd-b35367531fde"
       }
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/13df90a6-c189-4260-aafd-b35367531fde"
     }
   }
 }

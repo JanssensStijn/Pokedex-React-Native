@@ -29,8 +29,26 @@ export const FavoritesProvider = ({ children }) => {
     return favorites.includes(pokemonId);
   };
 
+  const getFavoritePokemons = async () => {
+      const pokemonDataList = await Promise.all(
+        favorites.map(async (pokemonId) => {
+          const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonId}`); // get the pokemon id from the specimen url instead of by name => more reliable for data about the pokemon
+          if(response.ok){
+              const pokemonData = await response.json();
+              return { ...pokemonData, found: true };
+          }
+          else{
+              console.error('Error fetching pokemons:', pokemon.name);
+              return {name: pokemon.name, found: false};
+          }
+        })
+      );
+      pokemonDataList.sort((a, b) => a.id - b.id);
+      return pokemonDataList;
+  }
+
   return (
-    <FavoritesContext.Provider value={{ favorites, addFavorite, removeFavorite, isFavorite }}>
+    <FavoritesContext.Provider value={{ getFavoritePokemons, addFavorite, removeFavorite, isFavorite }}>
       {children}
     </FavoritesContext.Provider>
   );

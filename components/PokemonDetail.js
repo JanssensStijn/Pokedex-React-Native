@@ -9,6 +9,8 @@ import TypesList from "./Details/TypesList";
 import Stats from "./Details/Stats";
 import GeneralDetailList from "./Details/GeneralDetailList";
 import MovesList from "./Details/MovesList";
+import { useFavorites } from "../contexts/FavoritesProvider";
+import { useEffect, useState } from "react";
 
 
 const playSound = async (soundUri) => {
@@ -28,6 +30,21 @@ const playSound = async (soundUri) => {
 };
 
 export default function PokemonDetail({ pokemon }) {
+    const { isFavorite, addFavorite, removeFavorite } = useFavorites();
+    const [favorite, setFavorite] = useState(false);
+    
+    useEffect(() => {
+        setFavorite(isFavorite(pokemon.id));
+    }, [isFavorite, pokemon.id]);
+    
+    const toggleFavorite = () => {
+        if (favorite) {
+          removeFavorite(pokemon.id);
+        } else {
+          addFavorite(pokemon.id);
+        }
+        setFavorite(!favorite);
+    };
     
     return (
         <ScrollView style={styles.pokemonContainer} contentContainerStyle={styles.center}>
@@ -37,6 +54,10 @@ export default function PokemonDetail({ pokemon }) {
                     {!pokemon.found && <Image source={require("../assets/pokemon_not_found.png")} style={styles.image} resizeMode="contain" />}
                 </View>
                 <View style={styles.column}>
+                    <Pressable onPress={toggleFavorite}>
+                        {favorite && <Icon name={"heart"} size={24} type="ionicon" style={styles.icon} />}
+                        {!favorite && <Icon name={"heart-outline"} size={24} type="ionicon" style={styles.icon} />}
+                    </Pressable>
                     <Pressable onPressOut={() => playSound(pokemon.cries.latest)} style={styles.touchable}>
                         <Icon name={"play-circle-outline"} size={40} type="ionicon" style={styles.icon} />
                         <Text style={styles.touchableText}>Latest Cry</Text>

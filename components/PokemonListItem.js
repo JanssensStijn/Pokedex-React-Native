@@ -7,7 +7,7 @@ import { capitalizeFirstChar } from "../utils/utils";
 import { useEffect, useState } from "react";
 import { useFavorites } from "../contexts/FavoritesProvider";
 
-export default function Pokemon({ pokemon }) {
+export default function PokemonListItem({ pokemon }) {
   const navigation = useNavigation();
   const { isFavorite, addFavorite, removeFavorite } = useFavorites();
   const [favorite, setFavorite] = useState(false);

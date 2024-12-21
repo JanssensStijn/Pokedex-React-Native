@@ -19,13 +19,24 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/pokemon_not_found.png",
         "backgroundColor": "#0000000"
-      }
+      },
+      "permissions": [
+        "android.permission.RECORD_AUDIO",
+        "android.permission.MODIFY_AUDIO_SETTINGS",
+        "android.permission.INTERNET"
+      ],
+      "package": "be.snipersoft.pokedex"
     },
     "web": {
       "favicon": "./assets/pokemon_not_found.png"
     },
     "plugins": [
       "expo-audio"
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "13df90a6-c189-4260-aafd-b35367531fde"
+      }
+    }
   }
 }

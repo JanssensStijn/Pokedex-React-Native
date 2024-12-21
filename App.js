@@ -1,4 +1,4 @@
-import { Platform, StyleSheet } from 'react-native';
+import { Platform } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { NavigationContainer } from '@react-navigation/native';
 import tw from "twrnc";
@@ -8,6 +8,7 @@ import HomeScreen from './screens/HomeScreen';
 import { PokemonGenProvider } from './contexts/PokemonGenProvider';
 import PokemonListScreen from './screens/PokemonListScreen';
 import PokemonDetailsScreen from './screens/PokemonDetailsScreen';
+import { FavoritesProvider } from './contexts/FavoritesProvider';
 
 const Stack = createNativeStackNavigator();
 
@@ -33,19 +34,23 @@ export default function App() {
   return (
     Platform.select({
       web: (
-        <NavigationContainer>
-          <PokemonGenProvider>
-            <ProvideApp />
-          </PokemonGenProvider>
-        </NavigationContainer>
+        <FavoritesProvider>
+          <NavigationContainer>
+            <PokemonGenProvider>
+              <ProvideApp />
+            </PokemonGenProvider>
+          </NavigationContainer>
+        </FavoritesProvider>
       ),
       default: (
-        <NavigationContainer>
-          <StatusBar/>
-          <PokemonGenProvider>
-            <ProvideApp />
-          </PokemonGenProvider>
-        </NavigationContainer>
+        <FavoritesProvider>
+          <NavigationContainer>
+            <StatusBar/>
+            <PokemonGenProvider>
+              <ProvideApp />
+            </PokemonGenProvider>
+          </NavigationContainer>
+        </FavoritesProvider>
       ),
     })
   );

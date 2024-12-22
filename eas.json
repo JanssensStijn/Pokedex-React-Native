@@ -8,11 +8,5 @@
           "buildType": "apk"
         }
       }
-    },
-    "extra": {
-      "eas": {
-        "projectId": "13df90a6-c189-4260-aafd-b35367531fde"
-      }
-    },
-    "owner": "snipersoft"
+    }
   }
